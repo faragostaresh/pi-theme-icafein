@@ -361,6 +361,15 @@ form .icon-question-sign {
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     border-radius: 0;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.pi-header .navbar-default .navbar-nav > .active > a,
+.pi-header .navbar-default .navbar-nav > .active > a:hover,
+.pi-header .navbar-default .navbar-nav > .active > a:focus {
+    color: #555;
+    background-color: #fff;
 }
 
 .pi-header-image {
@@ -387,6 +396,24 @@ form .icon-question-sign {
 .pi-header-image-box h2 {
     font-size: 15px;
     margin-bottom: 15px;
+}
+
+.pi-header .pi-header-social {
+    padding: 10px 0 0 0;
+}
+
+.pi-header .pi-header-social li a {
+    font-size: 18px;
+    text-align: center;
+}
+
+.pi-header .pi-header-social li a i {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #F93F40;
 }
 
 /* section */
@@ -456,4 +483,22 @@ form .icon-question-sign {
 
 .pi-footer-copyright-item {
     padding-top: 15px;
+}
+
+/* custom bootstrap */
+.btn-primary {
+    color: #fff;
+    background-color: #DE2B17;
+    border-color: #DC2716;
+}
+.btn-primary:focus,
+.btn-primary.focus {
+    color: #fff;
+    background-color: #DC2716;
+    border-color: #D51F11;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #DC2716;
+    border-color: #D51F11;
 }
