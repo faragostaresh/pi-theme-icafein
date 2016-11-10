@@ -211,14 +211,6 @@ $breadcrumbs = $this->breadcrumb(
                     echo 'col-md-12';
                 }
                 ?>">
-                    <!-- Center top zone -->
-                    <?php if (isset($blocks['2'])) { ?>
-                        <div class="pi-zone-2">
-                            <?php foreach ($blocks['2'] as $block) {
-                                include $blockTemplate;
-                            } ?>
-                        </div>
-                    <?php } ?>
                     <?php if (isset($blocks['3']) || isset($blocks['4'])) { ?>
                         <div class="row">
                             <div class="col-md-6 pi-zone-3">
@@ -241,6 +233,14 @@ $breadcrumbs = $this->breadcrumb(
                             </div>
                         </div>
                     <?php } ?>
+                    <!-- Center top zone -->
+                    <?php if (isset($blocks['2'])) { ?>
+                        <div class="pi-zone-2">
+                            <?php foreach ($blocks['2'] as $block) {
+                                include $blockTemplate;
+                            } ?>
+                        </div>
+                    <?php } ?>
                     <!-- Module content starts -->
                     <?php if (!empty($content)) { ?>
                         <div class="<?php echo $module; ?>">
@@ -248,6 +248,14 @@ $breadcrumbs = $this->breadcrumb(
                                 <?php echo $content; ?>
                             </div>
                             <?php echo Pi::service('comment')->load(array('options' => array('type' => 'js'))); ?>
+                        </div>
+                    <?php } ?>
+                    <!-- Center bottom zone -->
+                    <?php if (isset($blocks['7'])) { ?>
+                        <div class="pi-zone-7">
+                            <?php foreach ($blocks['7'] as $block) {
+                                include $blockTemplate;
+                            } ?>
                         </div>
                     <?php } ?>
                     <!-- Module content ends -->
@@ -271,14 +279,6 @@ $breadcrumbs = $this->breadcrumb(
                                 }
                                 ?>
                             </div>
-                        </div>
-                    <?php } ?>
-                    <!-- Center bottom zone -->
-                    <?php if (isset($blocks['7'])) { ?>
-                        <div class="pi-zone-7">
-                            <?php foreach ($blocks['7'] as $block) {
-                                include $blockTemplate;
-                            } ?>
                         </div>
                     <?php } ?>
                 </div>
