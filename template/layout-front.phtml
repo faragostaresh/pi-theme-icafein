@@ -235,10 +235,12 @@ $breadcrumbs = $this->breadcrumb(
                     <?php } ?>
                     <!-- Center top zone -->
                     <?php if (isset($blocks['2'])) { ?>
-                        <div class="pi-zone-2">
-                            <?php foreach ($blocks['2'] as $block) {
-                                include $blockTemplate;
-                            } ?>
+                        <div class="row">
+                            <div class="col-md-12 pi-zone-2">
+                                <?php foreach ($blocks['2'] as $block) {
+                                    include $blockTemplate;
+                                } ?>
+                            </div>
                         </div>
                     <?php } ?>
                     <!-- Module content starts -->
@@ -252,10 +254,12 @@ $breadcrumbs = $this->breadcrumb(
                     <?php } ?>
                     <!-- Center bottom zone -->
                     <?php if (isset($blocks['7'])) { ?>
-                        <div class="pi-zone-7">
-                            <?php foreach ($blocks['7'] as $block) {
-                                include $blockTemplate;
-                            } ?>
+                        <div class="row">
+                            <div class="col-md-12 pi-zone-7">
+                                <?php foreach ($blocks['7'] as $block) {
+                                    include $blockTemplate;
+                                } ?>
+                            </div>
                         </div>
                     <?php } ?>
                     <!-- Module content ends -->
