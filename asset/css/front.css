@@ -403,7 +403,7 @@ form .icon-question-sign {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 590px !important;
+    height: 383px !important;
     margin: 0;
     padding: 0;
     min-width: 1250px !important;
@@ -478,6 +478,10 @@ form .icon-question-sign {
     border-bottom: 15px solid #E70D0C;
 }
 
+.pi-footer-image-text {
+    padding: 100px 0;
+}
+
 .pi-footer-body {
     background: #E70D0C;
     padding: 50px 0;
@@ -516,6 +520,11 @@ form .icon-question-sign {
 
 .pi-footer-copyright-item {
     padding-top: 15px;
+}
+
+.footer-qrcode {
+    text-align: center;
+    padding-top: 50px;
 }
 /* custom module */
 

@@ -162,15 +162,13 @@ $breadcrumbs = $this->breadcrumb(
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
                     <div class="pi-header-image-box">
-                        <h2>جستجو بین کافه ها و مطالب</h2>
+                        <h2>نام شهر یا محله یا خیابان یا کافه را جهت مشاهده اطلاعات وارد کنید</h2>
                         <div class="clearfix">
                             <?php echo $this->widget('search-search'); ?>
                         </div>
-                    </div>
-                    <div class="pi-header-image-box">
-                        <h2>کافه های اطراف من</h2>
                         <div class="clearfix">
-                            <a class="btn btn-primary btn-lg" href="<?php echo Pi::url($this->url('home')); ?>guide/map" role="button">نقشه</a>
+                            <br />
+                            <a class="btn btn-primary btn-lg" href="<?php echo Pi::url($this->url('home')); ?>guide/map" role="button">کافه های اطراف</a>
                         </div>
                     </div>
                 </div>
@@ -306,9 +304,37 @@ $breadcrumbs = $this->breadcrumb(
         </div>
     </div>
 </section>
+
 <!-- Footer: sitelink -->
 <footer class="pi-footer">
-    <div class="pi-footer-image"></div>
+    <div class="pi-footer-image">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-6 text-center">
+                    <div class="pi-footer-image-text clearfix">
+                        <div class="col-md-6 col-md-offset-3">
+                            <img class="img-responsive" src="<?php echo $this->assetTheme('image/footer-text.png'); ?>" alt="اپلیکشن">
+                        </div>
+                    </div>
+                    <div class="pi-footer-image-app clearfix">
+                        <ul class="list-inline">
+                            <li class="col-md-4 col-md-offset-1">
+                                <a href="#" title="دانلود از اپ استور">
+                                    <img class="img-responsive" src="<?php echo $this->assetTheme('image/footer-app-store.png'); ?>" alt="دانلود از اپ استور">
+                                </a>
+                            </li>
+                            <li class="col-md-4 col-md-offset-1">
+                                <a href="#" title="دانلود از گوگل پلی">
+                                    <img class="img-responsive" src="<?php echo $this->assetTheme('image/footer-google-play.png'); ?>" alt="دانلود از گوگل پلی">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+    </div>
     <div class="pi-footer-body">
         <div class="container">
             <div class="row clearfix">
@@ -340,8 +366,8 @@ $breadcrumbs = $this->breadcrumb(
                         <li><a title="ایران دایرکتوری" href="#">ایران دایرکتوری</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3">
-
+                <div class="col-md-3 text-center footer-qrcode">
+                    <img src="<?php echo $this->assetTheme('image/qr-code.png'); ?>" alt="qr-code">
                 </div>
             </div>
         </div>
