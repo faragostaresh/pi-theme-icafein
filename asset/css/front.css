@@ -579,7 +579,8 @@ form .icon-question-sign {
     position: absolute;
     margin-top: -90px;
     height: 90px;
-    width: 90%;
+    width: 100%;
+    max-width: 495px;
 }
 
 .news-item-block-image .news-item-block-image-text a {
@@ -618,6 +619,11 @@ form .icon-question-sign {
     color: #fff;
 }
 
+.guide-block .guide-block-vertical .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
 .guide-block .guide-block-vertical-single {
     margin-bottom: 10px;
     background-color: #EBEBEB;
@@ -643,8 +649,10 @@ form .icon-question-sign {
 
 .guide-block .guide-block-vertical-single .col-xs-4 {
     padding-left: 0;
+    padding-right: 0;
 }
 
 .guide-block .guide-block-vertical-single .col-xs-8 {
+    padding-left: 0;
     padding-right: 0;
 }
