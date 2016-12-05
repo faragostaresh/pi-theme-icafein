@@ -442,6 +442,23 @@ form .icon-question-sign {
     background-color: #F93F40;
 }
 
+.pi-header-search-module {
+    padding: 10px 0 0 0;
+}
+
+.pi-header-search-module .form-control {
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.pi-header-search-module .input-group-btn .btn {
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
 .pi-header .user-bar a {
     color: #fff;
 }
@@ -449,16 +466,38 @@ form .icon-question-sign {
 .pi-header .user-bar a:hover {
     color: #333;
 }
+
+.pi-header-ads {
+    background-color: #B5B5B5;
+    padding: 45px 0;
+    border-top: 5px solid #747474;
+    border-bottom: 5px solid #747474;
+}
+
 /* section */
 .pi-section {
-    padding: 50px 0 !important;
-
+    padding: 30px 0 50px 0 !important;
 }
 
 .pi-section .pi-module-content {
     padding: 15px;
     margin-bottom: 15px;
+}
 
+.pi-section .pi-breadcrumbs {
+    background-color: #747474;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.pi-section .pi-breadcrumbs .breadcrumb  {
+    background-color: #747474;
+    margin-bottom: 0px;
+    color: #fff;
+}
+
+.pi-section .pi-breadcrumbs .breadcrumb a {
+    color: #fff;
 }
 
 /* footer */
