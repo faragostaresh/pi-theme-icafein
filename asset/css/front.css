@@ -467,11 +467,16 @@ form .icon-question-sign {
     color: #333;
 }
 
-.pi-header-ads {
+.pi-header-tabligh {
     background-color: #B5B5B5;
     padding: 45px 0;
     border-top: 5px solid #747474;
     border-bottom: 5px solid #747474;
+}
+
+.pi-header-tabligh .extra-item {
+    background: #fff;
+    padding: 5px;
 }
 
 /* section */
@@ -565,7 +570,45 @@ form .icon-question-sign {
     text-align: center;
     padding-top: 50px;
 }
+
+/* pi-subscription */
+.pi-subscription {
+    background-color: #E70D0C;
+    color: #fff;
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.pi-subscription-text {
+    padding: 15px 0;
+}
+
 /* custom module */
+.guide .itemTitle h1 {
+    font-size: 20px;
+}
+
+.guide .itemHead .itemMainRating {
+    margin: 1px 1px 1px 1px !important;
+}
+
+.guide .itemHead .itemTitle {
+    float: right !important;
+}
+
+.guide .itemHead .itemScore {
+    margin: 0 3px !important;
+}
+
+.guide .item-review-single  {
+    background: #EBEBEB;
+    padding: 10px;
+}
+
+.guide .item-review-single-admin {
+    background-color: #E70D0C;
+    color: #fff;
+}
 
 /* custom block */
 .news-item-block-image {
@@ -585,6 +628,11 @@ form .icon-question-sign {
 
 .news-item-block-image .news-item-block-image-text a {
     color: #fff;
+}
+
+.news-item-block-image img {
+    min-height: 365px;
+    width: 100%;
 }
 
 .news-item-block-horizontal .news-item-block-horizontal-box {
@@ -629,6 +677,10 @@ form .icon-question-sign {
     background-color: #EBEBEB;
 }
 
+.guide-block .col-md-6 .guide-block-vertical-single {
+    margin-left: 15px;
+}
+
 .guide-block .guide-block-vertical-single .itemSummary {
     padding: 10px;
 }
@@ -655,4 +707,38 @@ form .icon-question-sign {
 .guide-block .guide-block-vertical-single .col-xs-8 {
     padding-left: 0;
     padding-right: 0;
+}
+
+.event-block .recent-event-single {
+    border-bottom: 0;
+    text-align: center;
+}
+
+.event-block .recent-event-single img {
+    width: 100%;
+    height: 140px;
+}
+
+.event-block .recent-event-single .recent-event-single-caption {
+    background-color: #E70D0C;
+    padding: 10px;
+    color: #fff;
+}
+
+.event-block .recent-event-single .recent-event-single-caption a {
+    color: #fff;
+}
+
+.event-block .recent-event-single .recent-event-single-title {
+    min-height: 50px;
+}
+
+.event-block .recent-event-single .event-price,
+.event-block .recent-event-single .event-time {
+    padding: 15px 0;
+}
+
+.event-block .recent-event-single .event-discount {
+    font-size: 20px;
+    font-weight: bold;
 }
