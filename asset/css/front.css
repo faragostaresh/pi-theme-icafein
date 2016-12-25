@@ -730,15 +730,35 @@ form .icon-question-sign {
 }
 
 .event-block .recent-event-single .recent-event-single-title {
-    min-height: 50px;
+    min-height: 40px;
 }
 
 .event-block .recent-event-single .event-price,
 .event-block .recent-event-single .event-time {
-    padding: 15px 0;
+    padding: 10px 0;
 }
 
 .event-block .recent-event-single .event-discount {
     font-size: 20px;
     font-weight: bold;
+}
+
+.guide-block-review-single {
+    background-color: #EBEBEB;
+    text-align: center;
+    padding: 10px 10px 0 10px;
+}
+
+.guide-block-review-single .guide-block-review-single-item {
+    background-color: #E70D0C;
+    color: #fff;
+    padding: 10px;
+    margin: 0 -10px !important;
+}
+.guide-block-review-single .guide-block-review-single-item a {
+    color: #fff;
+}
+
+.guide-block-review-single .guide-block-review-single-title {
+    min-height: 50px;
 }
