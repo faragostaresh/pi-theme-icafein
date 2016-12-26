@@ -24,19 +24,19 @@ a:hover {
 }
 
 h1 {
-    font-size: 16px;
+    font-size: 20px;
 }
 
 h2 {
-    font-size: 15px;
+    font-size: 18px;
 }
 
 h3, h4 {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 h5, h6 {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: normal;
 }
 
@@ -93,8 +93,8 @@ h5, h6 {
 
 .btn-primary {
     color: #fff;
-    background-color: #DE2B17;
-    border-color: #DC2716;
+    background-color: #E70D0C;
+    border-color: #E70D0C;
 }
 .btn-primary:focus,
 .btn-primary.focus {
@@ -372,7 +372,7 @@ form .icon-question-sign {
 }
 
 .pi-header-body {
-    background: #E2321B;
+    background: #E70D0C;
 }
 
 .pi-header h1,
@@ -425,7 +425,8 @@ form .icon-question-sign {
 }
 
 .pi-header .pi-header-social {
-    padding: 10px 0 0 0;
+    padding-top: 10px;
+    padding-right: 5px;
 }
 
 .pi-header .pi-header-social li a {
@@ -491,8 +492,12 @@ form .icon-question-sign {
 
 .pi-section .pi-breadcrumbs {
     background-color: #747474;
-    margin-bottom: 20px;
     color: #fff;
+}
+
+.pi-section .pi-breadcrumbs .list-inline {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .pi-section .pi-breadcrumbs .breadcrumb  {
@@ -610,6 +615,32 @@ form .icon-question-sign {
     color: #fff;
 }
 
+.guide .item-ribbon p span {
+    background-color: #E70D0C;
+    color: #fff;
+}
+
+.guide .item-sort {
+    background-color: #E70D0C;
+    color: #fff;
+}
+
+.guide .item-sort .list-inline {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+
+
+
+.item-review-single img {
+    background: #fff;
+    padding: 5px;
+    margin: 25px 0;
+}
+
+
 /* custom block */
 .news-item-block-image {
     position: relative;
@@ -717,6 +748,14 @@ form .icon-question-sign {
 .event-block .recent-event-single img {
     width: 100%;
     height: 140px;
+    padding: 0;
+    margin: 0;
+}
+
+.event-block .recent-event-single .event-time {
+    background-color: #E70D0C;
+    padding: 10px;
+    color: #fff;
 }
 
 .event-block .recent-event-single .recent-event-single-caption {
@@ -733,8 +772,7 @@ form .icon-question-sign {
     min-height: 40px;
 }
 
-.event-block .recent-event-single .event-price,
-.event-block .recent-event-single .event-time {
+.event-block .recent-event-single .event-price {
     padding: 10px 0;
 }
 
@@ -761,4 +799,16 @@ form .icon-question-sign {
 
 .guide-block-review-single .guide-block-review-single-title {
     min-height: 50px;
+}
+
+.guide-block-review-single .guide-block-review-single-avatar img {
+    background: #fff;
+    padding: 5px;
+    margin: 25px 0;
+}
+
+.guide-block-review-single .guide-block-review-single-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
