@@ -1,0 +1,326 @@
+<?php
+
+// Load Match Height plugin
+$this->footScript()->appendFile($this->assetModule('js/jquery.matchHeight-min.js'));
+
+// Load angular custom js
+$script = <<<'EOT'
+
+$.fn.imagesLoaded = function () {
+
+    // get all the images (excluding those with no src attribute)
+    var $imgs = this.find('img[src!=""]');
+    // if there's no images, just return an already resolved promise
+    if (!$imgs.length) {return $.Deferred().resolve().promise();}
+
+    // for each image, add a deferred object to the array which resolves when the image is loaded (or if loading fails)
+    var dfds = [];  
+    $imgs.each(function(){
+
+        var dfd = $.Deferred();
+        dfds.push(dfd);
+        var img = new Image();
+        img.onload = function(){dfd.resolve();}
+        img.onerror = function(){dfd.resolve();}
+        img.src = this.src;
+
+    });
+
+    // return a master promise object which will resolve when all the deferred objects have resolved
+    // IE - when all the images are loaded
+    return $.when.apply($,dfds);
+}
+
+var app = angular.module('guide', ['angularUtils.directives.dirPagination']);
+
+app.directive('onFinishRender', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function ($scope, element, attr) {          
+//        if ($scope.$last === true) {
+            $timeout(function () {
+                $scope.$emit(attr.onFinishRender);
+            });
+//        }
+    }
+  };
+});
+
+app.controller('listdata',function($scope, $http){
+
+    $scope.items = [];
+    $('.ajax-spinner').show();
+    $http.get("%s").success(function(response){
+        $scope.items = response;
+        $('.ajax-spinner').hide();
+    });
+    $scope.sortKey = "%s";
+    $scope.reverse = true;
+    $scope.sort = function(keyname){
+        $scope.sortKey = keyname;
+        $scope.reverse = !$scope.reverse;
+    }
+    $scope.$on('dirPaginateFinished', function(dirPaginateFinishedEvent) {        
+        $('#listdata').imagesLoaded().then(function(){
+            $('.itemList .thumbnail').matchHeight();
+        });
+    });
+});
+
+EOT;
+$script = sprintf(
+    $script,
+    $filterUrl,
+    'time_create'
+);
+// Load header files
+$this->jQuery();
+$this->angular();
+$this->js($this->assetModule('js/dirPagination.js'));
+$this->css($this->assetModule('css/front.css'));
+$this->footScript()->appendScript($script);
+// Category tree view
+if ($config['view_category']) {
+    $scriptMenu = <<<'EOT'
+$(function() {
+    var json = '%s';
+    $('#category-tree-view').treeview({
+        levels: 1,
+        data: json,
+        enableLinks: true,
+        expandIcon: 'fa fa-plus',
+		collapseIcon: 'fa fa-minus',
+		emptyIcon: 'fa',
+		checkedIcon: 'fa fa-check-square-o',
+		uncheckedIcon: 'fa fa-square-o',
+    });
+});
+EOT;
+    $scriptMenu = sprintf(
+        $scriptMenu,
+        $categoriesJson
+    );
+
+    $this->footScript()->appendScript($scriptMenu);
+    $this->js($this->assetModule('js/bootstrap-treeview.min.js'));
+    $description = '';
+}
+?>
+<div class="clearfix row">
+    <div class="itemRelated categoryList clearfix" itemscope itemtype="http://schema.org/ItemList">
+        <?php include $this->template('front/category'); ?>
+    </div>
+
+    <?php if(!isset($categorySingle) || $categorySingle['display_subcategory'] == 0 || $categorySingle['display_subcategory'] == 2) : ?>
+        <div class="ajax-spinner">
+            <img src="<?php echo $this->assetModule('image/spinner.gif'); ?>" class="ajax-spinner-loader"/>
+        </div>
+        <?php include $this->template('front/location'); ?>
+        <div class="col-sm-12 col-md-3" post-render>
+            <div class="guide-search-form clearfix">
+                <div class="page-header">
+                    <h2><?php _e('Search on this group'); ?></h2>
+                </div>
+                <form class="well">
+                    <div class="form-group">
+                        <label><?php _e('Title'); ?></label>
+                        <input type="text" ng-model="filterTitle" class="form-control">
+                    </div>
+                    <?php if ($config['search_people_location']) { ?>
+                        <div class="form-group">
+                            <label><?php echo $config['search_people_location_title']; ?></label>
+                            <select ng-model="filterTypeAdvanced" class="form-control">
+                                <option value=""><?php _e('All'); ?></option>
+                                <option value="location"><?php echo $config['search_location_title']; ?></option>
+                                <option value="person"><?php echo $config['search_people_title']; ?></option>
+                            </select>
+                        </div>
+                    <?php } ?>
+                    <?php if ($config['search_category'] && isset($categoryList) && !empty($categoryList)) { ?>
+                        <div class="form-group">
+                            <label><?php _e('Category'); ?></label>
+                            <select ng-model="filterCategory" class="form-control">
+                                <option value=""><?php _e('All'); ?></option>
+                                <?php foreach ($categoryList as $category) { ?>
+                                    <option value="category-<?php echo $category['id']; ?>-id"><?php echo $category['title']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    <?php } ?>
+                    <?php if ($config['search_location'] && isset($locationList) && !empty($locationList)) { ?>
+                        <div class="form-group">
+                            <label><?php _e('Location'); ?></label>
+                            <select ng-model="filterLocation" class="form-control">
+                                <option value=""><?php _e('All'); ?></option>
+                                <?php foreach ($locationList as $location) { ?>
+                                    <option value="location-<?php echo $location['id']; ?>-id"><?php echo $location['title']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    <?php } ?>
+                    <?php if ($config['search_difficulty']) { ?>
+                        <div class="form-group">
+                            <label><?php _e('Difficulty'); ?></label>
+                            <select ng-model="filterDifficulty" class="form-control">
+                                <option value=""><?php _e('All'); ?></option>
+                                <?php $difficultyList = explode('|', $config['item_difficulty']); ?>
+                                <?php foreach ($difficultyList as $difficulty) { ?>
+                                    <?php if (!empty($difficulty)) { ?>
+                                        <option value="<?php echo $difficulty; ?>"><?php echo $difficulty; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    <?php } ?>
+                    <?php $filterNameArray = array(); ?>
+                    <?php foreach ($filterList as $singleFilter) { ?>
+                        <?php if ($singleFilter['type'] == 'select') { ?>
+                            <?php
+                            $filterName = 'filter' . $singleFilter['name'];
+                            $filterNameArray[] = array(
+                                'fieldName' => $singleFilter['name'],
+                                'filterName' => $filterName
+                            );
+                            ?>
+                            <div class="form-group">
+                                <label><?php echo $singleFilter['title']; ?></label>
+                                <select ng-model="<?php echo $filterName; ?>" class="form-control">
+                                    <option value=""><?php _e('All'); ?></option>
+                                    <?php foreach ($singleFilter['value']['data'] as $valueData) { ?>
+                                        <?php if (!empty($valueData)) { ?>
+                                            <option ng-click="sort('<?php echo $valueData; ?>')"><?php echo $valueData; ?></option>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        <?php } elseif ($singleFilter['type'] == 'text') { ?>
+                            <div class="form-group">
+                                <?php
+                                $filterName = 'filter' . $singleFilter['name'];
+                                $filterNameArray[] = array(
+                                    'fieldName' => $singleFilter['name'],
+                                    'filterName' => $filterName
+                                );
+                                ?>
+                                <label><?php echo $singleFilter['title']; ?></label>
+                                <input type="text" ng-model="<?php echo $filterName; ?>" class="form-control">
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+                </form>
+            </div>
+            <?php if ($config['view_category']) { ?>
+                <div class="clearfix category-list">
+                    <div class="page-header">
+                        <h2><?php _e('Category list'); ?></h2>
+                    </div>
+                    <div class="clearfix">
+                        <div id="category-tree-view"></div>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if (!empty ($description)) { ?>
+                <div class="clearfix">
+                    <div class="well small"><?php echo $description; ?></div>
+                </div>
+            <?php } ?>
+            <?php include $this->template('front/event'); ?>
+        </div>
+        <div id="listdata" class="col-sm-12 col-md-9" ng-controller="listdata">
+            <div class="clearfix">
+                <div class="itemList clearfix">
+                    <?php if (isset($itemTitleH1) && !empty($itemTitleH1)) { ?>
+                        <div class="page-header clearfix">
+                            <h1><?php echo $itemTitleH1; ?></h1>
+                        </div>
+                    <?php } elseif (isset($itemTitleH2) && !empty($itemTitleH2)) { ?>
+                        <div class="page-header clearfix">
+                            <h2><?php echo $itemTitleH2; ?></h2>
+                        </div>
+                    <?php } ?>
+                    <?php if (!empty($config['text_description_index']) && isset($showIndexDesc) && $showIndexDesc) { ?>
+                        <div class="well guideIndexDescription">
+                            <?php echo $config['text_description_index']; ?>
+                        </div>
+                    <?php } ?>
+                    <div class="clearfix item-sort">
+                        <ul class="list-inline">
+                            <li><?php _e('Sort by'); ?> :</li>
+                            <li class="item-sort-type" ng-click="sort('time_create')"><?php _e('Time'); ?> <i class="fa sort-icon" ng-show="sortKey=='time_create'" ng-class="{'fa-caret-up':reverse,'fa-caret-down':!reverse}"></i></li>
+                            <li class="item-sort-type" ng-click="sort('hits')"><?php _e('Hits'); ?> <i class="fa sort-icon" ng-show="sortKey=='hits'" ng-class="{'fa-caret-up':reverse,'fa-caret-down':!reverse}"></i></li>
+                            <li class="item-sort-type" ng-click="sort('favourite')"><?php _e('Favourite'); ?> <i class="fa sort-icon" ng-show="sortKey=='favourite'" ng-class="{'fa-caret-up':reverse,'fa-caret-down':!reverse}"></i></li>
+                            <li class="item-sort-type" ng-click="sort('checkin')"><?php _e('Checkin'); ?> <i class="fa sort-icon" ng-show="sortKey=='checkin'" ng-class="{'fa-caret-up':reverse,'fa-caret-down':!reverse}"></i></li>
+                            <li class="item-sort-type" ng-click="sort('title')"><?php _e('Title'); ?>  <i class="fa sort-icon" ng-show="sortKey=='title'" ng-class="{'fa-caret-up':reverse,'fa-caret-down':!reverse}"></i></li>
+                            <li class="item-sort-type" ng-click="sortKey=''"><?php _e('Default'); ?></li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div on-finish-render="dirPaginateFinished" dir-paginate="item in items|orderBy:sortKey:reverse|filter: {<?php if (!empty($filterNameArray)) { ?><?php foreach ($filterNameArray as $filterNameSingle) { ?><?php echo $filterNameSingle['fieldName'] ?> : <?php echo $filterNameSingle['filterName'] ?>,<?php } ?><?php } ?> title : filterTitle, itemTypeAdvanced : filterTypeAdvanced , difficulty : filterDifficulty , location : filterLocation , category : filterCategory} |itemsPerPage:<?php echo $config['view_perpage']; ?>"
+                             class="col-sm-12 col-md-4 itemBox h-review" itemscope itemtype="{{item.schema}}">
+
+
+
+
+
+
+
+                            <div class="item-angular-single">
+                                <div class="item-angular-single-title">
+                                    <h2 class="p-name" itemprop="name">
+                                        <a class="u-url" itemprop="url" title="{{item.title}}" href="{{item.itemUrl}}" target="_blank">
+                                            {{item.title}}
+                                        </a>
+                                    </h2>
+                                </div>
+                                <div class="item-angular-single-vote">
+
+                                </div>
+                                <div class="item-angular-single-image">
+                                    <a class="u-url with-min-price {{item.ribbon_class}}" itemprop="url" title="{{item.title}}" href="{{item.itemUrl}}"  target="_blank">
+                                        <img itemprop="image" class="img-responsive u-photo" src="{{item.mediumUrl}}" alt="{{item.title}}">
+                                        <p ng-if="item.ribbon">
+                                            <span>{{item.ribbon}}</span>
+                                        </p>
+                                        <div ng-if="item.min_price" class="item-price">
+                                            <ul class="list-unstyled">
+                                                <li class="item-price-from"><?php _e('Min price from'); ?></li>
+                                                <li class="item-price-price"><span ng-if="item.deal"><del class="small">{{item.reference_price}}</del></span> {{item.min_price}}</li>
+                                                <li class="item-price-service" ng-if="item.main_service">{{item.main_service}}</li>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="item-angular-single-address">
+                                    <div class="itemInfo p-adr">
+                                        <strong><?php _e('City'); ?></strong> :
+                                        <span class="p-locality">{{item.city}}</span>
+                                        <span ng-if="item.area" class="p-street-address"> | {{item.area}}</span>
+                                    </div>
+                                    <div class="clearfix">
+                                        {{item.address1}}
+                                    </div>
+                                </div>
+                                <div class="item-angular-single-title">
+                                    <span>{{item.hits}}</span>
+                                    <span>{{item.favourite}}</span>
+                                    <span>{{item.checkin}}</span>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="paginator">
+                    <dir-pagination-controls
+                        max-size="<?php echo $config['view_perpage']; ?>"
+                        direction-links="true"
+                        boundary-links="true">
+                    </dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
