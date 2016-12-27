@@ -630,15 +630,41 @@ form .icon-question-sign {
     margin-bottom: 0;
 }
 
-
-
-
-
-.item-review-single img {
+.guide .item-review-single img {
     background: #fff;
     padding: 5px;
     margin: 25px 0;
 }
+
+.guide .item-angular-single {
+    text-align: center;
+}
+
+.guide .item-angular-single .item-angular-single-title {
+    background-color: #E70D0C;
+    color: #fff;
+    padding: 10px;
+}
+
+.guide .item-angular-single .item-angular-single-vote {}
+
+.guide .item-angular-single .item-angular-single-image {}
+
+.guide .item-angular-single .item-angular-single-address {
+    background-color: #EBEBEB;
+    padding: 10px;
+}
+
+.guide .item-angular-single .item-angular-single-extra {
+    background-color: #B5B5B5;
+    padding: 10px;
+    color: #fff;
+}
+
+.guide .item-angular-single .item-angular-single-extra i {
+    font-size: 18px;
+}
+
 
 
 /* custom block */
