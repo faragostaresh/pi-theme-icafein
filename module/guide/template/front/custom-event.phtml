@@ -1,0 +1,56 @@
+<?php if (isset($events) && !empty($events)) { ?>
+    <div class="eventList clearfix">
+        <div class="page-header">
+            <h2><?php _e('Related events'); ?></h2>
+        </div>
+        <div class="clearfix row">
+            <?php foreach ($events as $event) { ?>
+                <div class="col-md-6" itemscope itemtype="http://schema.org/Event">
+                    <div class="clearfix item-box-head">
+                        <a itemprop="url" title="<?php echo $this->escape($event['title']); ?>"
+                           href="<?php echo $this->escape($event['eventUrl']); ?>">
+                            <span itemprop="name"><?php echo $this->escape($event['title']); ?></span>
+                        </a>
+                    </div>
+                    <div class="clearfix item-box-info">
+                        <?php if (!empty($event['image'])) { ?>
+                            <div class="item-box-info-image" itemprop="image">
+                                <img class="img-responsive" src="<?php echo $this->escape($event['thumbUrl']); ?>">
+                            </div>
+                        <?php } ?>
+                        <?php if (!empty($event['time_start']) && !empty($event['time_end'])) { ?>
+                            <span class="eventSingleTime dt-start">
+                                <?php _e('From ') ?><?php echo $this->escape($event['time_start_view']); ?>
+                            </span>
+                            <span class="eventSingleTime dt-end">
+                                <?php _e('to ') ?><?php echo $this->escape($event['time_end_view']); ?>
+                            </span>
+                            <meta itemprop="startDate" content="<?php echo $this->escape(date("Y-m-d H:i:s", $event['time_start'])); ?>" />
+                            <meta itemprop="endDate" content="<?php echo $this->escape(date("Y-m-d H:i:s", $event['time_end'])); ?>" />
+                        <?php } elseif (!empty($event['time_start'])) { ?>
+                            <span class="eventSingleTime dt-start"><?php echo $this->escape($event['time_start_view']); ?></span>
+                            <meta itemprop="startDate" content="<?php echo $this->escape(date("Y-m-d H:i:s", $event['time_start'])); ?>" />
+                            <meta itemprop="endDate" content="<?php echo $this->escape(date("Y-m-d H:i:s", $event['time_start'])); ?>" />
+                        <?php } ?>
+                        <?php if (!empty($event['locationInfo']['title'])) { ?>
+                            <span> , </span>
+                            <span itemprop="location" itemscope itemtype="http://schema.org/Place">
+                                <a itemprop="url" href="<?php echo $this->escape($event['locationInfo']['locationUrl']); ?>">
+                                    <span itemprop="name"><?php echo $this->escape($event['locationInfo']['title']); ?></span>
+                                </a>
+                                <span itemprop="address" itemscope itemtype="http://schema.org/Text">
+                                    <meta content="<?php echo $this->escape($event['locationInfo']['title']); ?>" />
+                                </span>
+                            </span>
+                        <?php } ?>
+                        <?php if (!empty($event['text_summary'])) { ?>
+                            <div class="item-box-info-text" itemprop="description">
+                                <?php echo $this->escape($event['text_summary']); ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+<?php } ?>

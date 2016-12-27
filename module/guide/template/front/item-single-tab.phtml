@@ -29,54 +29,82 @@ $this->geoTag($itemSingle['map_latitude'], $itemSingle['map_longitude'], $itemSi
     <div class="item-single item-custom">
         <div class="row">
             <div class="col-md-7">
-
                 <div class="clearfix item-head">
-                    <div class="itemTitle pull-left">
-                        <h1 itemprop="name"><?php echo $this->escape($itemSingle['title']); ?></h1>
-                    </div>
-                    <?php if ($config['vote_bar'] || $config['vote_bar_review']) { ?>
-                        <div class="itemScore pull-right">
+                    <ul class="list-inline">
+                        <li class="pull-left">
+                            <h1 itemprop="name"><?php echo $this->escape($itemSingle['title']); ?></h1>
+                        </li>
+                        <li class="pull-right">
                             <?php include $this->template('front/scoremain.phtml'); ?>
-                        </div>
-                    <?php } ?>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix">
+                    <?php include $this->template('front/gallery'); ?>
                 </div>
 
-                <?php include $this->template('front/gallery'); ?>
 
-
-                <div class="well clearfix">
-                    <ul class="text-muted list-inline text-right pull-right">
-                        <li><i class="fa fa-calendar"></i>  <?php echo $this->escape($itemSingle['time_update_view']); ?></li>
-                        <li><i class="fa fa-eye"></i> <?php echo _number($this->escape($itemSingle['hits'])); ?></li>
-                        <li><?php include $this->template('front/category'); ?></li>
-                        <li><i class="fa fa-map-marker"></i> <a title="<?php echo $this->escape($itemSingle['locationInfo']['title']); ?>" href="<?php echo $this->escape($itemSingle['locationInfo']['locationUrl']); ?>"><?php echo $this->escape($itemSingle['locationInfo']['title']); ?></a></li>
-                    </ul>
+                <div class="clearfix item-box-head">درباره <?php echo $this->escape($itemSingle['title']); ?></div>
+                <div class="clearfix item-box-info">
                     <?php if (!empty($itemSingle['city'])) { ?>
                         <ul class="list-inline pull-left">
                             <li><?php echo $this->escape($itemSingle['city']); ?><?php if (!empty($itemSingle['area'])) { ?> | <?php echo $this->escape($itemSingle['area']); ?><?php } ?></li>
                         </ul>
                     <?php } ?>
-
                     <?php if (!empty($itemSingle['type'])) { ?>
                         <div class="clearfix"><strong><?php _e('Type activity'); ?></strong>
                             : <?php echo $this->escape($itemSingle['type']); ?></div>
                     <?php } ?>
-                    <div class="clearfix"><?php include $this->template('front/tag'); ?></div>
-                </div>
-                <?php include $this->template('front/owner'); ?>
-
-                <div class="clearfix" itemprop="description">
-                    <?php echo $itemSingle['text_summary']; ?>
-                </div>
-
-                <div class="clearfix" itemprop="description">
-                    <?php echo $itemSingle['text_description']; ?>
-                </div>
 
 
-                <div class="clearfix">
-                    <?php include $this->template('front/score'); ?>
+                    <h2><?php _e('Area informations'); ?></h2>
+                    <?php if (!empty($itemSingle['address1'])) { ?>
+                        <div class="itemInfoText" itemprop="streetAddress"><strong><?php _e('Address 1'); ?></strong>
+                            : <?php echo $this->escape($itemSingle['address1']); ?></div>
+                    <?php } ?>
+                    <?php if (!empty($itemSingle['address2'])) { ?>
+                        <div class="itemInfoText" itemprop="streetAddress"><strong><?php _e('Address 2'); ?></strong>
+                            : <?php echo $this->escape($itemSingle['address2']); ?></div>
+                    <?php } ?>
+                    <?php if (!empty($itemSingle['city'])) { ?>
+                        <div class="itemInfoText"><strong><?php _e('City'); ?></strong>
+                            : <?php echo $this->escape($itemSingle['city']); ?></div>
+                    <?php } ?>
+                    <?php if (!empty($itemSingle['zipcode'])) { ?>
+                        <div class="itemInfoText"><strong><?php _e('Zip code'); ?></strong>
+                            : <?php echo $this->escape($itemSingle['zipcode']); ?></div>
+                    <?php } ?>
+                    <?php if (!empty($itemSingle['phone1'])) { ?>
+                        <div class="itemInfoText" itemprop="telephone"><strong><?php _e('Phone 1'); ?></strong>
+                            : <?php echo $this->escape($itemSingle['phone1']); ?></div>
+                    <?php } ?>
+                    <?php if (!empty($itemSingle['website'])) { ?>
+                        <div class="well well-sm clearfix">
+                            <h2><?php _e('Data'); ?></h2>
+                            <ul class="list-unstyled">
+                                <li><a title="<?php _e('Website'); ?>"
+                                       href="<?php echo $this->escape($itemSingle['website']); ?>"><i
+                                                class="fa fa-external-link"></i> <?php _e('Website'); ?></a></li>
+                            </ul>
+                        </div>
+                    <?php } ?>
+                    <hr />
+
+                    <div class="clearfix">
+                        <?php include $this->template('front/tag'); ?>
+                    </div>
+                    <div class="clearfix" itemprop="description">
+                        <?php echo $itemSingle['text_summary']; ?>
+                    </div>
+                    <div class="clearfix" itemprop="description">
+                        <?php echo $itemSingle['text_description']; ?>
+                    </div>
+                    <div class="clearfix">
+                        <hr />
+                        <?php include $this->template('front/owner'); ?>
+                    </div>
                 </div>
+
 
                 <?php if ($config['social_sharing']) { ?>
                     <div class="clearfix">
@@ -98,12 +126,14 @@ $this->geoTag($itemSingle['map_latitude'], $itemSingle['map_longitude'], $itemSi
 
             </div>
             <div class="col-md-5">
-
-
-
-
-
-
+                <div class="item-info-head">
+                    <ul class="list-inline">
+                        <li><i class="fa fa-calendar"></i>  <?php echo $this->escape($itemSingle['time_update_view']); ?></li>
+                        <li><i class="fa fa-eye"></i> <?php echo _number($this->escape($itemSingle['hits'])); ?></li>
+                        <li><?php include $this->template('front/category'); ?></li>
+                        <li><i class="fa fa-map-marker"></i> <a title="<?php echo $this->escape($itemSingle['locationInfo']['title']); ?>" href="<?php echo $this->escape($itemSingle['locationInfo']['locationUrl']); ?>"><?php echo $this->escape($itemSingle['locationInfo']['title']); ?></a></li>
+                    </ul>
+                </div>
                 <div class="clearfix item-map" itemscope itemprop="hasMap" itemtype="http://schema.org/Map">
                     <?php if (!empty($itemSingle['map_latitude']) && !empty($itemSingle['map_longitude'])) {
                         $locations = array(
@@ -127,60 +157,27 @@ $this->geoTag($itemSingle['map_latitude'], $itemSingle['map_longitude'], $itemSi
                     </div>
                 <?php } ?>
 
-
-
-                <div class="well clearfix" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                    <h2><?php _e('Area informations'); ?></h2>
-                    <?php if (!empty($itemSingle['address1'])) { ?>
-                        <div class="itemInfoText" itemprop="streetAddress"><strong><?php _e('Address 1'); ?></strong>
-                            : <?php echo $this->escape($itemSingle['address1']); ?></div>
-                    <?php } ?>
-                    <?php if (!empty($itemSingle['address2'])) { ?>
-                        <div class="itemInfoText" itemprop="streetAddress"><strong><?php _e('Address 2'); ?></strong>
-                            : <?php echo $this->escape($itemSingle['address2']); ?></div>
-                    <?php } ?>
-                    <?php if (!empty($itemSingle['city'])) { ?>
-                        <div class="itemInfoText"><strong><?php _e('City'); ?></strong>
-                            : <?php echo $this->escape($itemSingle['city']); ?></div>
-                    <?php } ?>
-                    <?php if (!empty($itemSingle['zipcode'])) { ?>
-                        <div class="itemInfoText"><strong><?php _e('Zip code'); ?></strong>
-                            : <?php echo $this->escape($itemSingle['zipcode']); ?></div>
-                    <?php } ?>
-                    <?php if (!empty($itemSingle['phone1'])) { ?>
-                        <div class="itemInfoText" itemprop="telephone"><strong><?php _e('Phone 1'); ?></strong>
-                            : <?php echo $this->escape($itemSingle['phone1']); ?></div>
-                    <?php } ?>
+                <div class="clearfix item-box-head">اطلاعات</div>
+                <div class="clearfix item-box-info item-box-scroll">
+                    <?php include $this->template('front/attribute'); ?>
+                    <?php include $this->template('front/service'); ?>
                 </div>
-                <?php if (!empty($itemSingle['website'])) { ?>
-                    <div class="well clearfix">
-                        <h2><?php _e('Data'); ?></h2>
-                        <ul class="list-unstyled">
-                            <li><a title="<?php _e('Website'); ?>"
-                                   href="<?php echo $this->escape($itemSingle['website']); ?>"><i
-                                            class="fa fa-external-link"></i> <?php _e('Website'); ?></a></li>
-                        </ul>
-                    </div>
-                <?php } ?>
-
-
-
-
-
-
-                <?php include $this->template('front/activity'); ?>
-                <?php include $this->template('front/attribute'); ?>
-                <?php include $this->template('front/service'); ?>
-                <?php include $this->template('front/calendar'); ?>
-                <?php include $this->template('front/take-control'); ?>
-
+                <div class="clearfix item-box-info">
+                    <hr />
+                    <?php include $this->template('front/calendar'); ?>
+                    <?php include $this->template('front/activity'); ?>
+                    <?php include $this->template('front/take-control'); ?>
+                </div>
 
             </div>
             <div class="col-md-12">
 
                 <div class="clearfix">
-                    <?php $eventText = __('There are no event for this item'); ?>
-                    <?php include $this->template('front/event'); ?>
+                    <?php include $this->template('front/score'); ?>
+                </div>
+
+                <div class="clearfix">
+                    <?php include $this->template('front/custom-event'); ?>
                 </div>
 
 

@@ -40,6 +40,10 @@ h5, h6 {
     font-weight: normal;
 }
 
+hr {
+    color: #808080;
+}
+
 /* Bootstrap custom */
 .nav-tabs {
     margin-bottom: 20px;
@@ -91,18 +95,28 @@ h5, h6 {
     }
 }
 
-.btn-primary {
+.btn-primary,
+.btn-success,
+.btn-info {
     color: #fff;
     background-color: #E70D0C;
     border-color: #E70D0C;
 }
+
 .btn-primary:focus,
-.btn-primary.focus {
+.btn-primary.focus,
+.btn-success:focus,
+.btn-success.focus,
+.btn-info:focus,
+.btn-info.focus {
     color: #fff;
     background-color: #DC2716;
     border-color: #D51F11;
 }
-.btn-primary:hover {
+
+.btn-primary:hover,
+.btn-success,
+.btn-info:hover {
     color: #fff;
     background-color: #DC2716;
     border-color: #D51F11;
@@ -200,7 +214,8 @@ h5, h6 {
 }
 
 .pi-map-canvas {
-    height: 400px;
+    height: 380px;
+    margin-bottom: 30px;
 }
 
 /* Elements */
@@ -500,7 +515,7 @@ form .icon-question-sign {
     margin-bottom: 0px;
 }
 
-.pi-section .pi-breadcrumbs .breadcrumb  {
+.pi-section .pi-breadcrumbs .breadcrumb {
     background-color: #747474;
     margin-bottom: 0px;
     color: #fff;
@@ -511,7 +526,8 @@ form .icon-question-sign {
 }
 
 /* footer */
-.pi-footer {}
+.pi-footer {
+}
 
 .pi-footer-image {
     -webkit-background-size: cover;
@@ -588,7 +604,6 @@ form .icon-question-sign {
     padding: 15px 0;
 }
 
-
 /* pagination */
 .pagination > li > a,
 .pagination > li > span {
@@ -626,7 +641,6 @@ form .icon-question-sign {
     border-color: #EBEBEB;
 }
 
-
 /* custom module */
 .guide .itemTitle h1 {
     font-size: 20px;
@@ -644,9 +658,19 @@ form .icon-question-sign {
     margin: 0 3px !important;
 }
 
-.guide .item-review-single  {
+.guide .item-review-single {
     background: #EBEBEB;
     padding: 10px;
+}
+
+.guide .item-review-single h4 {
+    color: #fff;
+    background-color: #E70D0C;
+    padding: 10px;
+}
+
+.guide .item-review-single .col-md-9 {
+    border-right:1px solid #747474;
 }
 
 .guide .item-review-single-admin {
@@ -714,7 +738,162 @@ form .icon-question-sign {
     margin: 0 10px;
 }
 
+.guide .item-single .item-head {
+    background-color: #E70D0C;
+    color: #fff;
+    margin-bottom: 15px;
+    padding: 10px;
+}
 
+.guide .item-single .list-inline {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.guide .item-single .item-head h1 {
+    padding: 0;
+    margin: 0;
+}
+
+.guide .item-single .thumbnail {
+    border: 0;
+    padding: 0;
+}
+
+.guide .item-single .itemMainRating,
+.guide .item-single .itemMainRating i {
+    color: #fff;
+}
+
+.guide .item-single .item-info-head {
+    background-color: #E70D0C;
+    color: #fff;
+    margin-bottom: 15px;
+    padding: 12px 10px;
+}
+
+.guide .item-single .item-info-head a {
+    color: #fff;
+}
+
+.guide .item-single .item-box-head {
+    background-color: #E70D0C;
+    color: #fff;
+    margin-bottom: 0;
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.guide .item-single .item-box-head a {
+    color: #fff;
+}
+
+.guide .item-single .item-box-info {
+    background: #EBEBEB;
+    padding: 10px;
+}
+
+.guide .item-single .item-box-scroll {
+    height: 185px;
+    overflow-x: auto;
+}
+
+.guide .item-single .item-box-info-image {
+    width: 30%;
+    float: right;
+    margin-left: 10px;
+    margin-top: -10px;
+    margin-right: -10px;
+}
+
+.guide .item-single .item-box-scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #EBEBEB;
+}
+
+.guide .item-single .item-box-scroll::-webkit-scrollbar {
+    width: 12px;
+    background-color: #EBEBEB;
+}
+
+.guide .item-single .item-box-scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+}
+
+.guide .item-single .well {
+    min-height: 20px;
+    padding: 0;
+    margin-bottom: 0;
+    background-color: inherit;
+    border: 0;
+    border-radius: 0;
+    -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, .05);
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, .05);
+}
+
+.itemUserActivity .favouritebar .btn-success {
+    background-color: #E70D0C !important;
+    border-color: #E70D0C !important;
+}
+
+.itemUserActivity .favouritebar .btn-success:hover,
+.itemUserActivity .favouritebar .btn-success:focus,
+.itemUserActivity .favouritebar .btn-success.focus,
+.itemUserActivity .favouritebar .btn-success:active,
+.itemUserActivity .favouritebar .btn-success.active {
+    background-color: #E70D0C !important;
+    border-color: #E70D0C !important;
+}
+
+.itemUserActivity .favouritebar .btn-primary {
+    background-color: #E70D0C !important;
+    border-color: #E70D0C !important;
+    opacity: 1 !important;
+}
+
+.itemUserActivity .favouritebar .btn-primary:hover,
+.itemUserActivity .favouritebar .btn-primary:focus,
+.itemUserActivity .favouritebar .btn-primary.focus,
+.itemUserActivity .favouritebar .btn-primary:active,
+.itemUserActivity .favouritebar .btn-primary.active {
+    background-color: #E70D0C !important;
+    border-color: #E70D0C !important;
+    opacity: 1 !important;
+}
+
+.itemUserActivity .checkinbar .btn-success {
+    background-color: #E70D0C !important;
+    border-color: #E70D0C !important;
+}
+
+.itemUserActivity .checkinbar .btn-success:hover,
+.itemUserActivity .checkinbar .btn-success:focus,
+.itemUserActivity .checkinbar .btn-success.focus,
+.itemUserActivity .checkinbar .btn-success:active,
+.itemUserActivity .checkinbar .btn-success.active {
+    background-color: #E70D0C !important;
+    border-color: #E70D0C !important;
+}
+
+.itemUserActivity .checkinbar .btn-primary {
+    background-color: #E70D0C !important;
+    border-color: #E70D0C !important;
+    opacity: 1 !important;
+}
+
+.itemUserActivity .checkinbar .btn-primary:hover,
+.itemUserActivity .checkinbar .btn-primary:focus,
+.itemUserActivity .checkinbar .btn-primary.focus,
+.itemUserActivity .checkinbar .btn-primary:active,
+.itemUserActivity .checkinbar .btn-primary.active {
+    background-color: #E70D0C !important;
+    border-color: #E70D0C !important;
+    opacity: 1 !important;
+}
 
 /* custom block */
 .news-item-block-image {
@@ -868,6 +1047,7 @@ form .icon-question-sign {
     padding: 10px;
     margin: 0 -10px !important;
 }
+
 .guide-block-review-single .guide-block-review-single-item a {
     color: #fff;
 }
