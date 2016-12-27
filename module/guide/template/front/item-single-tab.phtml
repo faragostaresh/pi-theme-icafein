@@ -103,27 +103,22 @@ $this->geoTag($itemSingle['map_latitude'], $itemSingle['map_longitude'], $itemSi
                         <hr />
                         <?php include $this->template('front/owner'); ?>
                     </div>
+                    <?php if ($config['social_sharing']) { ?>
+                        <div class="clearfix">
+                            <div class="col-md-12 col-sm-12 col-xs-12 socialSharingText">
+                                <strong><?php _e('Share if you like'); ?></strong>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 socialSharing">
+                                <?php echo $this->socialSharing(
+                                    $config['social_sharing'],
+                                    $itemSingle['title'],
+                                    $itemSingle['itemUrl'],
+                                    $itemSingle['largeUrl']
+                                ); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
                 </div>
-
-
-                <?php if ($config['social_sharing']) { ?>
-                    <div class="clearfix">
-                        <div class="col-md-12 col-sm-12 col-xs-12 socialSharingText">
-                            <strong><?php _e('Share if you like'); ?></strong>
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12 socialSharing">
-                            <?php echo $this->socialSharing(
-                                $config['social_sharing'],
-                                $itemSingle['title'],
-                                $itemSingle['itemUrl'],
-                                $itemSingle['largeUrl']
-                            ); ?>
-                        </div>
-                    </div>
-                <?php } ?>
-
-
-
             </div>
             <div class="col-md-5">
                 <div class="item-info-head">
@@ -171,16 +166,14 @@ $this->geoTag($itemSingle['map_latitude'], $itemSingle['map_longitude'], $itemSi
 
             </div>
             <div class="col-md-12">
-
-                <div class="clearfix">
+                <br /><br />
+                <div class="clearfix item-box-head">امتیاز دهی</div>
+                <div class="clearfix item-box-info">
                     <?php include $this->template('front/score'); ?>
                 </div>
-
                 <div class="clearfix">
                     <?php include $this->template('front/custom-event'); ?>
                 </div>
-
-
                 <?php include $this->template('front/attach_audio'); ?>
                 <?php include $this->template('front/attribute_audio'); ?>
                 <?php include $this->template('front/attach_video'); ?>
@@ -189,52 +182,7 @@ $this->geoTag($itemSingle['map_latitude'], $itemSingle['map_longitude'], $itemSi
                 <?php include $this->template('front/review'); ?>
                 <?php include $this->template('front/related_free'); ?>
                 <?php include $this->template('front/item-list-location'); ?>
-
-
             </div>
-
-
-
-
         </div>
     </div>
 </div>
-<?php /*
-
-
-
-
-
-        <div class="clearfix itemUnderHead small">
-
-        </div>
-        <?php if (isset($itemSingle['status_type_view']) && $itemSingle['status_type'] > 1) { ?>
-            <div class="clearfix">
-                <div class="alert alert-danger" role="alert">
-                    <i class="fa fa-exclamation-triangle"></i>
-                    <?php echo $this->escape($itemSingle['status_type_view']); ?>
-                </div>
-            </div>
-        <?php } ?>
-        <div class="clearfix">
-            <div class="row" id="stickyContainer">
-                <div class="col-md-8">
-
-
-
-
-
-                </div>
-                <div class="col-md-4">
-                    <div id="rightSidebar">
-                        <?php include $this->template('front/partial/sticky'); ?>
-
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-*/ ?>

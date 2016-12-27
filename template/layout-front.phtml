@@ -244,23 +244,25 @@ $breadcrumbs = $this->breadcrumb(
                 ?>">
                     <?php if (isset($blocks['3']) || isset($blocks['4'])) { ?>
                         <div class="row">
-                            <div class="col-md-6 pi-zone-3">
-                                <?php
-                                if (isset($blocks['3'])) {
-                                    foreach ($blocks['3'] as $block) {
-                                        include $blockTemplate;
+                            <div class="row">
+                                <div class="col-md-6 pi-zone-3">
+                                    <?php
+                                    if (isset($blocks['3'])) {
+                                        foreach ($blocks['3'] as $block) {
+                                            include $blockTemplate;
+                                        }
                                     }
-                                }
-                                ?>
-                            </div>
-                            <div class="col-md-6 pi-zone-4">
-                                <?php
-                                if (isset($blocks['4'])) {
-                                    foreach ($blocks['4'] as $block) {
-                                        include $blockTemplate;
+                                    ?>
+                                </div>
+                                <div class="col-md-6 pi-zone-4">
+                                    <?php
+                                    if (isset($blocks['4'])) {
+                                        foreach ($blocks['4'] as $block) {
+                                            include $blockTemplate;
+                                        }
                                     }
-                                }
-                                ?>
+                                    ?>
+                                </div>
                             </div>
                         </div>
                     <?php } ?>

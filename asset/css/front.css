@@ -795,7 +795,7 @@ form .icon-question-sign {
 }
 
 .guide .item-single .item-box-scroll {
-    height: 185px;
+    height: 260px;
     overflow-x: auto;
 }
 
@@ -908,7 +908,7 @@ form .icon-question-sign {
     margin-top: -90px;
     height: 90px;
     width: 100%;
-    max-width: 495px;
+    max-width: 510px;
 }
 
 .news-item-block-image .news-item-block-image-text a {
@@ -916,7 +916,7 @@ form .icon-question-sign {
 }
 
 .news-item-block-image img {
-    min-height: 365px;
+    min-height: 375px;
     width: 100%;
 }
 
