@@ -24,11 +24,11 @@ a:hover {
 }
 
 h1 {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 h2 {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 h3, h4 {
@@ -588,6 +588,45 @@ form .icon-question-sign {
     padding: 15px 0;
 }
 
+
+/* pagination */
+.pagination > li > a,
+.pagination > li > span {
+    background-color: #EBEBEB;
+    border-color: #EBEBEB;
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+    color: #fff;
+    background-color: #E70D0C;
+    border-color: #E70D0C;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    color: #fff;
+    background-color: #E70D0C;
+    border-color: #E70D0C;
+}
+
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+    background-color: #EBEBEB;
+    border-color: #EBEBEB;
+}
+
+
 /* custom module */
 .guide .itemTitle h1 {
     font-size: 20px;
@@ -638,17 +677,26 @@ form .icon-question-sign {
 
 .guide .item-angular-single {
     text-align: center;
+    margin-bottom: 30px;
 }
 
 .guide .item-angular-single .item-angular-single-title {
     background-color: #E70D0C;
     color: #fff;
-    padding: 10px;
+    padding: 1px 5px 5px 5px;
+    margin: 0;
 }
 
-.guide .item-angular-single .item-angular-single-vote {}
+.guide .item-angular-single .item-angular-single-title h2 a {
+    color: #fff;
+    padding: 0;
+    margin: 0;
+}
 
-.guide .item-angular-single .item-angular-single-image {}
+.guide .item-angular-single .item-angular-single-image img {
+    height: 150px;
+    width: 100%;
+}
 
 .guide .item-angular-single .item-angular-single-address {
     background-color: #EBEBEB;
@@ -663,6 +711,7 @@ form .icon-question-sign {
 
 .guide .item-angular-single .item-angular-single-extra i {
     font-size: 18px;
+    margin: 0 10px;
 }
 
 
