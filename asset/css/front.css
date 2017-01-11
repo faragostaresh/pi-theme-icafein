@@ -948,6 +948,16 @@ form .icon-question-sign {
     opacity: 1 !important;
 }
 
+
+.itemSummary,
+.news-item-block-summary,
+.event-single-main {
+    text-align: justify;
+}
+
+.itemInfo {
+    padding-right: 10px;
+}
 /* custom block */
 .news-item-block-image {
     position: relative;
@@ -1042,6 +1052,8 @@ form .icon-question-sign {
 
 .guide-block .guide-block-vertical-single .col-xs-4 img {
     border-radius: 0 !important;
+    height: 110px;
+    width: 100%;
 }
 
 .guide-block .guide-block-vertical-single .col-xs-4 {
@@ -1126,4 +1138,19 @@ form .icon-question-sign {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 15px;
+}
+
+
+.item-angular-single-title {
+    height: 35px;
+    margin-bottom: 5px;
+}
+
+.item-angular-single {
+    margin-bottom: 50px;
+}
+
+.item-ribbon p span {
+    right: -100px;
+    height: 20px;
 }

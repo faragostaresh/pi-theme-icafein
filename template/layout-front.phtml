@@ -61,6 +61,20 @@ $this->headLink(array(
 // Meta Viewport Tag
 $this->headMeta('width=device-width, initial-scale=1.0', 'viewport');
 
+// Add feed
+$this->headLink(array(
+    'rel'   => 'alternate',
+    'type' => 'application/rss+xml',
+    'title' => 'RSS',
+    'href'  => Pi::url('feed/guide'),
+));
+$this->headLink(array(
+    'rel'   => 'alternate',
+    'type' => 'application/rss+xml',
+    'title' => 'RSS',
+    'href'  => Pi::url('feed/news'),
+));
+
 // Explicitly load favicon
 $this->headLink(array(
     'rel'   => 'shortcut icon',
