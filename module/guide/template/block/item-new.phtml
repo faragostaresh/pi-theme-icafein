@@ -1,0 +1,656 @@
+<?php
+if (isset($block['show-columns']) && !empty($block['show-columns'])) {
+    switch ($block['show-columns']) {
+        case 1:
+            $columns = '';
+            break;
+
+        case 2:
+            $columns = 'col-sm-6 col-md-6';
+            break;
+
+        case 3:
+            $columns = 'col-sm-6 col-md-4';
+            break;
+
+        case 4:
+            $columns = 'col-sm-4 col-md-3';
+            break;
+
+        case 6:
+            $columns = 'col-sm-3 col-md-2';
+            break;
+    }
+} else {
+    $columns = 'col-sm-6 col-md-4';
+}
+
+// Add css
+if ($block['show-ribbon'] || $block['show-price']) {
+    $this->css($this->assetModule('css/block.css', 'guide'));
+}
+?>
+    <div class="guide-block">
+        <div class="guide-block-new clearfix <?php echo $block['extra-css']; ?>">
+            <?php if ($block['list-type'] == 'horizontal') { ?>
+                <div class="guide-block-horizontal">
+                    <?php foreach ($block['resources'] as $item) { ?>
+                        <?php switch ($item['item_type']) {
+                            case 'commercial':
+                                $schema = 'http://schema.org/LocalBusiness';
+                                break;
+
+                            case 'route':
+                                $schema = 'http://schema.org/Landform';
+                                break;
+
+                            case 'poi':
+                                $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                break;
+
+                            case 'asset':
+                                $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                break;
+
+                            case 'person':
+                                $schema = 'http://schema.org/Person';
+                                break;
+                        } ?>
+                        <div class="<?php echo $columns; ?> itemBox h-review guide-block-horizontal-single" itemscope itemtype="<?php echo $schema; ?>">
+                            <div class="thumbnail p-item h-card">
+                                <?php if ($item['image']) { ?>
+                                    <a class="u-url with-min-price <?php if ($item['ribbon'] && $block['show-ribbon']) { ?> guide-block-ribbon<?php } ?>" itemprop="url" title="<?php echo $this->escape($item['title']); ?>"
+                                       href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                        <img itemprop="image" class="img-responsive u-photo"
+                                             src="<?php echo $item['mediumUrl']; ?>"
+                                             alt="<?php echo $this->escape($item['title']); ?>"/>
+                                        <?php if ($item['ribbon'] && $block['show-ribbon']) { ?>
+                                            <p><span><?php echo $this->escape($item['ribbon']); ?></span></p>
+                                        <?php } ?>
+                                        <?php if (isset($item['min_price'])) { ?>
+                                            <div class="guide-block-price">
+                                                <ul class="list-unstyled">
+                                                    <li class="item-price-from"><?php echo _b('Min price from'); ?></li>
+                                                    <li class="item-price-price"><span><?php if ($item['deal']) { ?><del class="small"><?php echo $item['reference_price'] ?></del><?php } ?></span> <?php echo $item['min_price'] ?></li>
+                                                    <li class="item-price-service"><?php echo $item['main_service'] ?></li>
+                                                </ul>
+                                            </div>
+                                        <?php } ?>
+                                    </a>
+                                <?php } ?>
+                                <div class="caption">
+                                    <?php if ($block['show-title']) { ?>
+                                        <h3 class="p-name" itemprop="name">
+                                            <a class="u-url" itemprop="url" title="<?php echo $this->escape($item['title']); ?>"
+                                               href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                                <?php echo $this->escape($item['title']); ?>
+                                            </a>
+                                        </h3>
+                                    <?php } ?>
+                                    <?php if ($block['show-location'] && !empty($item['area']) && !empty($item['city'])) { ?>
+                                        <div class="itemInfo p-adr">
+                                            <strong><?php echo _b('Location'); ?></strong> :
+                                            <span class="p-locality"><?php echo $this->escape($item['city']); ?></span>
+                                            <?php if (!empty($item['area'])) { ?> | <span
+                                                class="p-street-address"><?php echo $this->escape($item['area']); ?></span><?php } ?>
+                                        </div>
+                                    <?php } ?>
+                                    <div class="clearfix" itemprop="description">
+                                        <?php if ($item['item_type'] == 'commercial') { ?>
+                                            <?php if ($block['show-phone'] && !empty($item['phone1'])) { ?>
+                                                <div class="itemInfo" itemprop="telephone">
+                                                    <strong><?php echo _b('Phone'); ?></strong> : <span
+                                                        class="p-tel"><?php echo $this->escape($item['phone1']); ?></span></div>
+                                            <?php } ?>
+                                            <?php if ($block['show-type'] && !empty($item['type'])) { ?>
+                                                <div class="itemInfo"><strong><?php echo _b('Type'); ?></strong>
+                                                    : <?php echo $this->escape($item['type']); ?></div>
+                                            <?php } ?>
+                                        <?php } elseif ($item['item_type'] == 'route') { ?>
+                                            <?php if ($block['show-difficulty'] && !empty($item['difficulty'])) { ?>
+                                                <div class="itemInfo"><strong><?php echo _b('Difficulty'); ?></strong>
+                                                    : <?php echo $this->escape($item['difficulty']); ?></div>
+                                            <?php } ?>
+                                            <?php if ($block['show-duration'] && !empty($item['duration'])) { ?>
+                                                <div class="itemInfo"><strong><?php echo _b('Duration (h)'); ?></strong>
+                                                    : <?php echo $this->escape($item['duration']); ?></div>
+                                            <?php } ?>
+                                            <?php if ($block['show-elevation'] && !empty($item['elevation_end'])) { ?>
+                                                <div class="itemInfo"><strong><?php echo _b('Elevation (m)'); ?></strong>
+                                                    : <?php echo $this->escape($item['elevation_end']); ?></div>
+                                            <?php } ?>
+                                        <?php } elseif ($item['item_type'] == 'poi' || $item['item_type'] == 'asset') { ?>
+                                            <?php if ($block['show-type'] && !empty($item['type'])) { ?>
+                                                <div class="itemInfo"><strong><?php echo _b('Type'); ?></strong>
+                                                    : <?php echo $this->escape($item['type']); ?></div>
+                                            <?php } ?>
+                                            <?php if ($block['show-elevation'] && !empty($item['elevation_end'])) { ?>
+                                                <div class="itemInfo"><strong><?php echo _b('Elevation (m)'); ?></strong>
+                                                    : <?php echo $this->escape($item['elevation_end']); ?></div>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </div>
+                                    <?php if ($block['show-summary'] && !empty($item['text_summary'])) { ?>
+                                        <div class="itemSummary"
+                                             itemprop="description"><?php echo $item['text_summary']; ?></div>
+                                    <?php } ?>
+                                    <?php if ($item['item_type'] == 'commercial') { ?>
+                                        <?php if (!empty($item['map_latitude']) && !empty($item['map_longitude'])) { ?>
+                                            <div class="h-geo hidden" itemprop="geo" itemscope
+                                                 itemtype="http://schema.org/GeoCoordinates">
+                                        <span
+                                            class="p-latitude"><?php echo $this->escape($item['map_latitude']); ?></span>,
+                                                <span
+                                                    class="p-longitude"><?php echo $this->escape($item['map_longitude']); ?></span>
+                                                <meta itemprop="latitude"
+                                                      content="<?php echo $this->escape($item['map_latitude']); ?>"/>
+                                                <meta itemprop="longitude"
+                                                      content="<?php echo $this->escape($item['map_longitude']); ?>"/>
+                                            </div>
+                                        <?php } ?>
+                                    <?php } elseif ($item['item_type'] == 'route' || $item['item_type'] == 'poi') { ?>
+                                        <?php if (!empty($item['map_final_latitude']) && !empty($item['map_final_longitude'])) { ?>
+                                            <div class="h-geo hidden" itemprop="geo" itemscope
+                                                 itemtype="http://schema.org/GeoCoordinates">
+                                        <span
+                                            class="p-latitude"><?php echo $this->escape($item['map_final_latitude']); ?></span>,
+                                                <span
+                                                    class="p-longitude"><?php echo $this->escape($item['map_final_longitude']); ?></span>
+                                                <meta itemprop="latitude"
+                                                      content="<?php echo $this->escape($item['map_final_latitude']); ?>"/>
+                                                <meta itemprop="longitude"
+                                                      content="<?php echo $this->escape($item['map_final_longitude']); ?>"/>
+                                            </div>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php } elseif ($block['list-type'] == 'vertical') { ?>
+                <div class="guide-block-vertical">
+                    <?php foreach ($block['resources'] as $item) { ?>
+                        <?php switch ($item['item_type']) {
+                            case 'commercial':
+                                $schema = 'http://schema.org/LocalBusiness';
+                                break;
+
+                            case 'route':
+                                $schema = 'http://schema.org/Landform';
+                                break;
+
+                            case 'poi':
+                                $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                break;
+
+                            case 'asset':
+                                $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                break;
+
+                            case 'person':
+                                $schema = 'http://schema.org/Person';
+                                break;
+                        } ?>
+                        <div class="<?php echo $columns; ?> h-review row clearfix guide-block-vertical-single" itemscope itemtype="<?php echo $schema; ?>">
+                            <div class="col-xs-4">
+                                <?php if ($item['image']) { ?>
+                                    <a class="u-url<?php if ($item['ribbon'] && $block['show-ribbon']) { ?> guide-block-ribbon<?php } ?>" itemprop="url" title="<?php echo $this->escape($item['title']); ?>"
+                                       href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                        <img itemprop="image" class="img-rounded img-responsive u-photo"
+                                             src="<?php echo $item['mediumUrl']; ?>"
+                                             alt="<?php echo $this->escape($item['title']); ?>"/>
+                                        <?php if ($item['ribbon'] && $block['show-ribbon']) { ?>
+                                            <p><span><?php echo $this->escape($item['ribbon']); ?></span></p>
+                                        <?php } ?>
+                                    </a>
+                                <?php } ?>
+                            </div>
+                            <div class="col-xs-8 p-item h-card">
+                                <?php if ($block['show-title']) { ?>
+                                    <h3 class="media-heading p-name clearfix" itemprop="name">
+                                        <a class="u-url" itemprop="url" title="<?php echo $this->escape($item['title']); ?>"
+                                           href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                            <?php echo $this->escape($item['title']); ?>
+                                        </a>
+                                        <div class="pull-right"><?php include $this->template('scorelist', 'front', 'guide'); ?></div>
+                                    </h3>
+                                <?php } ?>
+                                <?php if ($block['show-location'] && !empty($item['area']) && !empty($item['city'])) { ?>
+                                    <div class="itemInfo p-adr">
+                                        <strong><?php echo _b('Location'); ?></strong> :
+                                        <span class="p-locality"><?php echo $this->escape($item['city']); ?></span>
+                                        <?php if (!empty($item['area'])) { ?> | <span
+                                            class="p-street-address"><?php echo $this->escape($item['area']); ?></span><?php } ?>
+                                    </div>
+                                <?php } ?>
+                                <div class="clearfix" itemprop="description">
+                                    <?php if ($item['item_type'] == 'commercial') { ?>
+                                        <?php if ($block['show-phone'] && !empty($item['phone1'])) { ?>
+                                            <div class="itemInfo" itemprop="telephone">
+                                                <strong><?php echo _b('Phone'); ?></strong> : <span
+                                                    class="p-tel"><?php echo $this->escape($item['phone1']); ?></span></div>
+                                        <?php } ?>
+                                        <?php if ($block['show-type'] && !empty($item['type'])) { ?>
+                                            <div class="itemInfo"><strong><?php echo _b('Type'); ?></strong>
+                                                : <?php echo $this->escape($item['type']); ?></div>
+                                        <?php } ?>
+                                    <?php } elseif ($item['item_type'] == 'route') { ?>
+                                        <?php if ($block['show-difficulty'] && !empty($item['difficulty'])) { ?>
+                                            <div class="itemInfo"><strong><?php echo _b('Difficulty'); ?></strong>
+                                                : <?php echo $this->escape($item['difficulty']); ?></div>
+                                        <?php } ?>
+                                        <?php if ($block['show-duration'] && !empty($item['duration'])) { ?>
+                                            <div class="itemInfo"><strong><?php echo _b('Duration (h)'); ?></strong>
+                                                : <?php echo $this->escape($item['duration']); ?></div>
+                                        <?php } ?>
+                                        <?php if ($block['show-elevation'] && !empty($item['elevation_end'])) { ?>
+                                            <div class="itemInfo"><strong><?php echo _b('Elevation (m)'); ?></strong>
+                                                : <?php echo $this->escape($item['elevation_end']); ?></div>
+                                        <?php } ?>
+                                    <?php } elseif ($item['item_type'] == 'poi' || $item['item_type'] == 'asset') { ?>
+                                        <?php if ($block['show-type'] && !empty($item['type'])) { ?>
+                                            <div class="itemInfo"><strong><?php echo _b('Type'); ?></strong>
+                                                : <?php echo $this->escape($item['type']); ?></div>
+                                        <?php } ?>
+                                        <?php if ($block['show-elevation'] && !empty($item['elevation_end'])) { ?>
+                                            <div class="itemInfo"><strong><?php echo _b('Elevation (m)'); ?></strong>
+                                                : <?php echo $this->escape($item['elevation_end']); ?></div>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </div>
+                                <?php if ($block['show-summary'] && !empty($item['text_summary'])) { ?>
+                                    <div class="itemSummary" itemprop="description"><?php echo $item['text_summary']; ?></div>
+                                <?php } ?>
+                                <?php if ($item['item_type'] == 'commercial') { ?>
+                                    <?php if (!empty($item['map_latitude']) && !empty($item['map_longitude'])) { ?>
+                                        <div class="h-geo hidden" itemprop="geo" itemscope
+                                             itemtype="http://schema.org/GeoCoordinates">
+                                            <span class="p-latitude"><?php echo $this->escape($item['map_latitude']); ?></span>,
+                                            <span
+                                                class="p-longitude"><?php echo $this->escape($item['map_longitude']); ?></span>
+                                            <meta itemprop="latitude"
+                                                  content="<?php echo $this->escape($item['map_latitude']); ?>"/>
+                                            <meta itemprop="longitude"
+                                                  content="<?php echo $this->escape($item['map_longitude']); ?>"/>
+                                        </div>
+                                    <?php } ?>
+                                <?php } elseif ($item['item_type'] == 'route' || $item['item_type'] == 'poi') { ?>
+                                    <?php if (!empty($item['map_final_latitude']) && !empty($item['map_final_longitude'])) { ?>
+                                        <div class="h-geo hidden" itemprop="geo" itemscope
+                                             itemtype="http://schema.org/GeoCoordinates">
+                                    <span
+                                        class="p-latitude"><?php echo $this->escape($item['map_final_latitude']); ?></span>,
+                                            <span
+                                                class="p-longitude"><?php echo $this->escape($item['map_final_longitude']); ?></span>
+                                            <meta itemprop="latitude"
+                                                  content="<?php echo $this->escape($item['map_final_latitude']); ?>"/>
+                                            <meta itemprop="longitude"
+                                                  content="<?php echo $this->escape($item['map_final_longitude']); ?>"/>
+                                        </div>
+                                    <?php } ?>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php } elseif ($block['list-type'] == 'box') { ?>
+                <div class="guide-block-box">
+                    <div class="row">
+                        <?php $i = 1;?>
+                        <?php foreach ($block['resources'] as $item) { ?>
+                            <?php switch ($item['item_type']) {
+                                case 'commercial':
+                                    $schema = 'http://schema.org/LocalBusiness';
+                                    break;
+
+                                case 'route':
+                                    $schema = 'http://schema.org/Landform';
+                                    break;
+
+                                case 'poi':
+                                    $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                    break;
+
+                                case 'asset':
+                                    $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                    break;
+
+                                case 'person':
+                                    $schema = 'http://schema.org/Person';
+                                    break;
+                            }
+                            if (in_array($i, array(1,11,21,31,41,51,61))) {
+                                $class = 'col-md-6 col-sm-12 col-xs-12 itemBoxBig pull-left';
+                                $img = $item['itemimageUrl'];
+                            } elseif (in_array($i, array(6,16,26,36,46,56,66))) {
+                                $class = 'col-md-6 col-sm-12 col-xs-12 itemBoxBig pull-right';
+                                $img = $item['itemimageUrl'];
+                            } else {
+                                $class = 'col-md-3 col-sm-12 col-xs-12';
+                                $img = $item['thumbUrl'];
+                            } ?>
+                            <div class="h-review <?php echo $class;?> guide-block-box-single" itemscope itemtype="<?php echo $schema; ?>">
+                                <div class="thumbnail">
+                                    <?php if ($item['image']) { ?>
+                                        <a class="u-url<?php if ($item['ribbon'] && $block['show-ribbon']) { ?> guide-block-ribbon<?php } ?>" itemprop="url" title="<?php echo $this->escape($item['title']); ?>"
+                                           href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                            <img itemprop="image" class="img-rounded img-responsive u-photo"
+                                                 src="<?php echo $item['mediumUrl']; ?>"
+                                                 alt="<?php echo $this->escape($item['title']); ?>"/>
+                                            <?php if ($item['ribbon'] && $block['show-ribbon']) { ?>
+                                                <p><span><?php echo $this->escape($item['ribbon']); ?></span></p>
+                                            <?php } ?>
+                                        </a>
+                                    <?php } ?>
+                                    <div class="caption p-item h-card">
+                                        <?php if ($block['show-title']) { ?>
+                                            <h3 class="p-name" itemprop="name">
+                                                <a class="u-url" itemprop="url" title="<?php echo $this->escape($item['title']); ?>"
+                                                   href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                                    <?php echo $this->escape($item['title']); ?>
+                                                </a>
+                                            </h3>
+                                        <?php } ?>
+                                        <?php if ($block['show-location'] && !empty($item['area']) && !empty($item['city'])) { ?>
+                                            <div class="itemInfo p-adr">
+                                                <strong><?php echo _b('Location'); ?></strong> :
+                                                <span class="p-locality"><?php echo $this->escape($item['city']); ?></span>
+                                                <?php if (!empty($item['area'])) { ?> | <span
+                                                    class="p-street-address"><?php echo $this->escape($item['area']); ?></span><?php } ?>
+                                            </div>
+                                        <?php } ?>
+                                        <div class="clearfix" itemprop="description">
+                                            <?php if ($item['item_type'] == 'commercial') { ?>
+                                                <?php if ($block['show-phone'] && !empty($item['phone1'])) { ?>
+                                                    <div class="itemInfo" itemprop="telephone">
+                                                        <strong><?php echo _b('Phone'); ?></strong> : <span
+                                                            class="p-tel"><?php echo $this->escape($item['phone1']); ?></span></div>
+                                                <?php } ?>
+                                                <?php if ($block['show-type'] && !empty($item['type'])) { ?>
+                                                    <div class="itemInfo"><strong><?php echo _b('Type'); ?></strong>
+                                                        : <?php echo $this->escape($item['type']); ?></div>
+                                                <?php } ?>
+                                            <?php } elseif ($item['item_type'] == 'route') { ?>
+                                                <?php if ($block['show-difficulty'] && !empty($item['difficulty'])) { ?>
+                                                    <div class="itemInfo"><strong><?php echo _b('Difficulty'); ?></strong>
+                                                        : <?php echo $this->escape($item['difficulty']); ?></div>
+                                                <?php } ?>
+                                                <?php if ($block['show-duration'] && !empty($item['duration'])) { ?>
+                                                    <div class="itemInfo"><strong><?php echo _b('Duration (h)'); ?></strong>
+                                                        : <?php echo $this->escape($item['duration']); ?></div>
+                                                <?php } ?>
+                                                <?php if ($block['show-elevation'] && !empty($item['elevation_end'])) { ?>
+                                                    <div class="itemInfo"><strong><?php echo _b('Elevation (m)'); ?></strong>
+                                                        : <?php echo $this->escape($item['elevation_end']); ?></div>
+                                                <?php } ?>
+                                            <?php } elseif ($item['item_type'] == 'poi' || $item['item_type'] == 'asset') { ?>
+                                                <?php if ($block['show-type'] && !empty($item['type'])) { ?>
+                                                    <div class="itemInfo"><strong><?php echo _b('Type'); ?></strong>
+                                                        : <?php echo $this->escape($item['type']); ?></div>
+                                                <?php } ?>
+                                                <?php if ($block['show-elevation'] && !empty($item['elevation_end'])) { ?>
+                                                    <div class="itemInfo"><strong><?php echo _b('Elevation (m)'); ?></strong>
+                                                        : <?php echo $this->escape($item['elevation_end']); ?></div>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </div>
+                                        <?php if ($block['show-summary'] && !empty($item['text_summary'])) { ?>
+                                            <div class="itemSummary" itemprop="description"><?php echo $item['text_summary']; ?></div>
+                                        <?php } ?>
+                                        <?php if ($item['item_type'] == 'commercial') { ?>
+                                            <?php if (!empty($item['map_latitude']) && !empty($item['map_longitude'])) { ?>
+                                                <div class="h-geo hidden" itemprop="geo" itemscope
+                                                     itemtype="http://schema.org/GeoCoordinates">
+                                                    <span class="p-latitude"><?php echo $this->escape($item['map_latitude']); ?></span>,
+                                                    <span
+                                                        class="p-longitude"><?php echo $this->escape($item['map_longitude']); ?></span>
+                                                    <meta itemprop="latitude"
+                                                          content="<?php echo $this->escape($item['map_latitude']); ?>"/>
+                                                    <meta itemprop="longitude"
+                                                          content="<?php echo $this->escape($item['map_longitude']); ?>"/>
+                                                </div>
+                                            <?php } ?>
+                                        <?php } elseif ($item['item_type'] == 'route' || $item['item_type'] == 'poi') { ?>
+                                            <?php if (!empty($item['map_final_latitude']) && !empty($item['map_final_longitude'])) { ?>
+                                                <div class="h-geo hidden" itemprop="geo" itemscope
+                                                     itemtype="http://schema.org/GeoCoordinates">
+                                    <span
+                                        class="p-latitude"><?php echo $this->escape($item['map_final_latitude']); ?></span>,
+                                                    <span
+                                                        class="p-longitude"><?php echo $this->escape($item['map_final_longitude']); ?></span>
+                                                    <meta itemprop="latitude"
+                                                          content="<?php echo $this->escape($item['map_final_latitude']); ?>"/>
+                                                    <meta itemprop="longitude"
+                                                          content="<?php echo $this->escape($item['map_final_longitude']); ?>"/>
+                                                </div>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if (in_array($i, array(5,10,15,20,25,30,35,40,45,50,55,60,65,70))) { ?>
+                                <div class="clearfix visible-xs-block"></div>
+                            <?php } ?>
+                            <?php $i++;?>
+                        <?php } ?>
+                    </div>
+                </div>
+            <?php } elseif ($block['list-type'] == 'list') { ?>
+                <div class="guide-block-list">
+                    <ul class="list-group">
+                        <?php foreach ($block['resources'] as $item) { ?>
+                            <?php switch ($item['item_type']) {
+                                case 'commercial':
+                                    $schema = 'http://schema.org/LocalBusiness';
+                                    break;
+
+                                case 'route':
+                                    $schema = 'http://schema.org/Landform';
+                                    break;
+
+                                case 'poi':
+                                    $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                    break;
+
+                                case 'asset':
+                                    $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                    break;
+
+                                case 'person':
+                                    $schema = 'http://schema.org/Person';
+                                    break;
+                            } ?>
+                            <li class="p-name list-group-item guide-block-list-single" itemscope itemtype="<?php echo $schema; ?>">
+                                <a class="u-url" itemprop="url" title="<?php echo $this->escape($item['title']); ?>"
+                                   href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                    <span itemprop="name"><?php echo $this->escape($item['title']); ?></span>
+                                </a>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            <?php } elseif ($block['list-type'] == 'slide') { ?>
+                <div class="guide-block-slide">
+                    <?php if ($block['blockEffect']) {
+                        $this->jQuery(array(
+                            'extension/owl.carousel.min.js',
+                            'extension/owl.carousel.css',
+                        ));
+                        $this->js($this->assetModule('js/owl.carousel.config.js', 'guide'));
+                        $this->css($this->assetModule('css/block.css', 'guide'));
+                    } ?>
+                    <div class="owl-carousel itemImageAttach text-center clearfix hover-captions-container">
+                        <?php foreach ($block['resources'] as $item) { ?>
+                            <?php switch ($item['item_type']) {
+                                case 'commercial':
+                                    $schema = 'http://schema.org/LocalBusiness';
+                                    break;
+
+                                case 'route':
+                                    $schema = 'http://schema.org/Landform';
+                                    break;
+
+                                case 'poi':
+                                    $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                    break;
+
+                                case 'asset':
+                                    $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                    break;
+
+                                case 'person':
+                                    $schema = 'http://schema.org/Person';
+                                    break;
+                            } ?>
+                            <div class="item h-review guide-block-slide-single" itemscope itemtype="<?php echo $schema; ?>">
+                                <div class="thumbnail p-item h-card">
+                                    <?php if ($item['image']) { ?>
+                                        <a itemprop="url" class="u-url" title="<?php echo $this->escape($item['title']); ?>"
+                                           href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                            <img itemprop="image" class="img-responsive u-photo"
+                                                 src="<?php echo $this->escape($item['mediumUrl']); ?>"
+                                                 alt="<?php echo $this->escape($item['title']); ?>"/>
+                                        </a>
+                                    <?php } ?>
+                                    <h3 itemprop="name" class="p-name">
+                                        <a itemprop="url" class="u-url" title="<?php echo $this->escape($item['title']); ?>"
+                                           href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                            <?php echo $this->escape($item['title']); ?>
+                                        </a>
+                                    </h3>
+                                </div>
+                                <?php if ($item['item_type'] == 'commercial') { ?>
+                                    <?php if (!empty($item['map_latitude']) && !empty($item['map_longitude'])) { ?>
+                                        <div class="h-geo hidden" itemprop="geo" itemscope
+                                             itemtype="http://schema.org/GeoCoordinates">
+                                            <span class="p-latitude"><?php echo $this->escape($item['map_latitude']); ?></span>,
+                                            <span
+                                                class="p-longitude"><?php echo $this->escape($item['map_longitude']); ?></span>
+                                            <meta itemprop="latitude"
+                                                  content="<?php echo $this->escape($item['map_latitude']); ?>"/>
+                                            <meta itemprop="longitude"
+                                                  content="<?php echo $this->escape($item['map_longitude']); ?>"/>
+                                        </div>
+                                    <?php } ?>
+                                <?php } elseif ($item['item_type'] == 'route' || $item['item_type'] == 'poi') { ?>
+                                    <?php if (!empty($item['map_final_latitude']) && !empty($item['map_final_longitude'])) { ?>
+                                        <div class="h-geo hidden" itemprop="geo" itemscope
+                                             itemtype="http://schema.org/GeoCoordinates">
+                                    <span
+                                        class="p-latitude"><?php echo $this->escape($item['map_final_latitude']); ?></span>,
+                                            <span
+                                                class="p-longitude"><?php echo $this->escape($item['map_final_longitude']); ?></span>
+                                            <meta itemprop="latitude"
+                                                  content="<?php echo $this->escape($item['map_final_latitude']); ?>"/>
+                                            <meta itemprop="longitude"
+                                                  content="<?php echo $this->escape($item['map_final_longitude']); ?>"/>
+                                        </div>
+                                    <?php } ?>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            <?php } elseif ($block['list-type'] == 'slidehover') { ?>
+                <div class="guide-block-slidehover">
+                    <?php if ($block['blockEffect']) {
+                        $this->jQuery(array(
+                            'extension/owl.carousel.min.js',
+                            'extension/owl.carousel.css',
+                        ));
+                        $this->js($this->assetModule('js/owl.carousel.config.js', 'guide'));
+                        $this->js($this->assetModule('js/caption.hover.js', 'guide'));
+                        $this->css($this->assetModule('css/block.css', 'guide'));
+                    } ?>
+                    <div class="owl-carousel itemImageAttach text-center clearfix hover-captions-container">
+                        <?php foreach ($block['resources'] as $item) { ?>
+                            <?php switch ($item['item_type']) {
+                                case 'commercial':
+                                    $schema = 'http://schema.org/LocalBusiness';
+                                    break;
+
+                                case 'route':
+                                    $schema = 'http://schema.org/Landform';
+                                    break;
+
+                                case 'poi':
+                                    $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                    break;
+
+                                case 'asset':
+                                    $schema = 'http://schema.org/LandmarksOrHistoricalBuildings';
+                                    break;
+
+                                case 'person':
+                                    $schema = 'http://schema.org/Person';
+                                    break;
+                            } ?>
+                            <div class="item hover-captions hover-captions-slide guide-block-slidehover-single" itemscope itemtype="<?php echo $schema; ?>">
+                                <div class="hover-caption text-center">
+                                    <h3 itemprop="name"><?php echo $this->escape($item['title']); ?></h3>
+
+                                    <p>
+                                        <a class="u-url hover-caption-more" itemprop="url"
+                                           title="<?php echo $this->escape($item['title']); ?>"
+                                           href="<?php echo $this->escape($item['itemUrl']); ?>">
+                                            <?php echo _b('View'); ?>
+                                        </a>
+                                    </p>
+                                </div>
+                                <img itemprop="image" class="media-object img-responsive u-photo"
+                                     src="<?php echo $item['largeUrl']; ?>" alt="<?php echo $this->escape($item['title']); ?>">
+                                <?php if ($item['item_type'] == 'commercial') { ?>
+                                    <?php if (!empty($item['map_latitude']) && !empty($item['map_longitude'])) { ?>
+                                        <div class="h-geo hidden" itemprop="geo" itemscope
+                                             itemtype="http://schema.org/GeoCoordinates">
+                                            <span class="p-latitude"><?php echo $this->escape($item['map_latitude']); ?></span>,
+                                            <span
+                                                class="p-longitude"><?php echo $this->escape($item['map_longitude']); ?></span>
+                                            <meta itemprop="latitude"
+                                                  content="<?php echo $this->escape($item['map_latitude']); ?>"/>
+                                            <meta itemprop="longitude"
+                                                  content="<?php echo $this->escape($item['map_longitude']); ?>"/>
+                                        </div>
+                                    <?php } ?>
+                                <?php } elseif ($item['item_type'] == 'route' || $item['item_type'] == 'poi') { ?>
+                                    <?php if (!empty($item['map_final_latitude']) && !empty($item['map_final_longitude'])) { ?>
+                                        <div class="h-geo hidden" itemprop="geo" itemscope
+                                             itemtype="http://schema.org/GeoCoordinates">
+                                    <span
+                                        class="p-latitude"><?php echo $this->escape($item['map_final_latitude']); ?></span>,
+                                            <span
+                                                class="p-longitude"><?php echo $this->escape($item['map_final_longitude']); ?></span>
+                                            <meta itemprop="latitude"
+                                                  content="<?php echo $this->escape($item['map_final_latitude']); ?>"/>
+                                            <meta itemprop="longitude"
+                                                  content="<?php echo $this->escape($item['map_final_longitude']); ?>"/>
+                                        </div>
+                                    <?php } ?>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+        <?php if ($block['more-show'] && !empty($block['more-link'])) { ?>
+            <div class="guide-block-more clearfix">
+                <a title="<?php echo _b('More items'); ?>"
+                   href="<?php echo $block['more-link']; ?>"><?php echo _b('More items'); ?></a>
+            </div>
+        <?php } ?>
+    </div>
+
+<?php
+
+// Load Match Height plugin
+$this->footScript()->appendFile($this->assetModule('js/jquery.matchHeight-min.js', 'guide'));
+
+$script = <<<'EOT'
+$(function() {
+    $('.guide-block-new .thumbnail').matchHeight();
+});
+EOT;
+
+$this->footScript()->appendScript($script);
