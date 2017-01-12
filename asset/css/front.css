@@ -723,7 +723,7 @@ form .icon-question-sign {
 }
 
 .guide .item-review-single .col-md-9 {
-    border-right:1px solid #747474;
+    border-right: 1px solid #747474;
 }
 
 .guide .item-review-single-admin {
@@ -760,7 +760,13 @@ form .icon-question-sign {
 .guide .item-angular-single .item-angular-single-title {
     background-color: #E70D0C;
     color: #fff;
-    padding: 1px 5px 5px 5px;
+    padding: 5px;
+    margin: 0;
+}
+
+.guide .item-angular-single .item-angular-single-title h2 {
+    color: #fff;
+    padding: 0;
     margin: 0;
 }
 
@@ -948,16 +954,22 @@ form .icon-question-sign {
     opacity: 1 !important;
 }
 
-
 .itemSummary,
 .news-item-block-summary,
+.news-item-block-summary .p-summary,
 .event-single-main {
-    text-align: justify;
+    text-align: justify !important;
 }
 
-.itemInfo {
-    padding-right: 10px;
+.itemInfo .p-adr {
+    padding-right: 10px !important;
 }
+
+.guide-block-review-single,
+.news-item-block-horizontal-box {
+    background-color: #E4E4E4;
+}
+
 /* custom block */
 .news-item-block-image {
     position: relative;
@@ -1071,11 +1083,21 @@ form .icon-question-sign {
     text-align: center;
 }
 
-.event-block .recent-event-single img {
-    width: 100%;
-    height: 140px;
-    padding: 0;
-    margin: 0;
+@media (min-width: 767px) {
+    .event-block .recent-event-single img {
+        width: 100%;
+        height: 140px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .event-block .recent-event-single img {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
 }
 
 .event-block .recent-event-single .event-time {
@@ -1140,17 +1162,18 @@ form .icon-question-sign {
     margin-bottom: 15px;
 }
 
-
-.item-angular-single-title {
-    height: 35px;
-    margin-bottom: 5px;
-}
-
 .item-angular-single {
     margin-bottom: 50px;
 }
 
+.item-ribbon {
+    font-weight: 400 !important;
+    font-size: 12px !important;
+}
+
 .item-ribbon p span {
-    right: -100px;
-    height: 20px;
+    right: -50px !important;
+    top: 20px !important;
+    width: 160px !important;
+    padding: 3px 6px !important;
 }
